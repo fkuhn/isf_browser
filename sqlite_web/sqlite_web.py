@@ -464,6 +464,9 @@ def table_content(table):
 def table_query(table):
     data = []
     data_description = error = row_count = sql = None
+    ds_table = dataset[table]
+    field_names = ds_table.columns
+    columns = [f.column_name for f in ds_table.model_class._meta.sorted_fields]
 
     if request.method == 'POST':
         sql = request.form['sql']
@@ -490,6 +493,8 @@ def table_query(table):
         'SELECT sql FROM sqlite_master WHERE tbl_name = ? AND type = ?',
         [table, 'table']).fetchone()[0]
 
+
+
     return render_template(
         'table_query.html',
         data=data,
@@ -499,7 +504,9 @@ def table_query(table):
         row_count=row_count,
         sql=sql,
         table=table,
-        table_sql=table_sql)
+        table_sql=table_sql,
+        field_names=field_names,
+        columns=columns)
 
 @app.route('/table-definition/', methods=['POST'])
 def set_table_definition_preference():
@@ -583,7 +590,7 @@ def drop_table(table):
     if request.method == 'POST':
         model_class = dataset[table].model_class
         model_class.drop_table()
-        flash('Table "%s" dropped successfully.' % table, 'success')
+        flash('Tabelle "%s" erfolgreich gelöscht.' % table, 'success')
         return redirect(url_for('index'))
 
     return render_template('drop_table.html', table=table)
