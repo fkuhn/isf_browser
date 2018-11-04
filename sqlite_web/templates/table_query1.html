@@ -9,6 +9,11 @@
 
 {% block extra_scripts %}
   <script type="text/javascript">
+  $(document).ready(function() {
+    $('#').DataTable();
+    } );
+  </script>
+  <script type="text/javascript">
     $(function() {
       var tableInfo = $('div#tableInfo');
 
@@ -48,8 +53,15 @@
     {{ table_sql|format_create_table|highlight }}
   </div>
   <form action="." method="post" role="form">
+{#  TODO: Dynamische Buttons fuer Query#}
+       {# <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton1" aria-haspopup="true" aria-expanded="false">SQL Hilfe</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          {% for column  in columns %}
+            <a class="dropdown-item">{{column}}</a>
+          {% endfor %}
+        </div>#}
     <div class="form-group{% if error %} has-error has-feedback{% endif %}">
-      <textarea class="form-control" name="sql" style="height: 120px;">{% if sql %}{{ sql }}{% endif %}</textarea>
+      <textarea class="btn btn-info dropdown-toggel" name="sql" style="height: 120px;">{% if sql %}{{ sql }}{% endif %}</textarea>
       {% if error %}
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         <span class="help-block">{{ error }}</span>
@@ -60,7 +72,7 @@
     <button class="btn btn-secondary" name="export_csv" type="submit">CSV Export</button>
     <div class="btn-group">
       <div class="dropdown">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">SQL Help</button>
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">SQL Hilfe</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {% for parts, img_url in query_images %}
             <a class="dropdown-item sql-image" href="{{ url_for('static', filename=img_url) }}">{{ ' : '.join(parts) }}</a>

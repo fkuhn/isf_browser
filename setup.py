@@ -11,18 +11,20 @@ else:
     long_description = ''
 
 setup(
-    name='sqlite-web',
-    version='0.3.5',
-    description='Web-based SQLite database browser.',
+    name='isf_browser',
+    version='0.1',
+    description='Webbasierter Browser für die ISF Datenbank.'
+                ' Basierend auf SQLITE-Web (v0.3.5) von Charles Leifner',
     long_description=long_description,
-    author='Charles Leifer',
-    author_email='coleifer@gmail.com',
-    url='https://github.com/coleifer/sqlite-web',
+    author='Florian Kuhn',
+    author_email='fkuhn@posteo.de',
+    url='https://github.com/fkuhn/isf_browser',
     license='MIT',
     install_requires=[
         'flask',
         'peewee>=3.0.0',
         'pygments',
+        'flask_wtf'
     ],
     include_package_data=True,
     packages=find_packages(),

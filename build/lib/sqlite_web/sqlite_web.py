@@ -95,7 +95,9 @@ ViewMetadata = namedtuple('ViewMetadata', ('name', 'sql'))
 # Database helpers.
 #
 
+
 class SqliteDataSet(DataSet):
+
     @property
     def filename(self):
         db_file = dataset._database.database
@@ -183,6 +185,7 @@ class SqliteDataSet(DataSet):
 #
 # Flask views.
 #
+# route decorators are used to point to the target template
 
 @app.route('/')
 def index():
@@ -464,6 +467,12 @@ def table_content(table):
 def table_query(table):
     data = []
     data_description = error = row_count = sql = None
+    ds_table = dataset[table]
+    field_names = ds_table.columns
+    columns = [f.column_name for f in ds_table.model_class._meta.sorted_fields]
+    # isf_browser features
+    query_operators = ["<",">",">=","<=","=","<>"]
+
 
     if request.method == 'POST':
         sql = request.form['sql']
@@ -499,7 +508,10 @@ def table_query(table):
         row_count=row_count,
         sql=sql,
         table=table,
-        table_sql=table_sql)
+        table_sql=table_sql,
+        field_names=field_names,
+        columns=columns,
+        query_operators=query_operators)
 
 @app.route('/table-definition/', methods=['POST'])
 def set_table_definition_preference():
@@ -583,7 +595,7 @@ def drop_table(table):
     if request.method == 'POST':
         model_class = dataset[table].model_class
         model_class.drop_table()
-        flash('Table "%s" dropped successfully.' % table, 'success')
+        flash('Tabelle "%s" erfolgreich gelöscht.' % table, 'success')
         return redirect(url_for('index'))
 
     return render_template('drop_table.html', table=table)
@@ -754,6 +766,7 @@ def open_browser_tab(host, port):
     thread.daemon = True
     thread.start()
 
+
 def install_auth_handler(password):
     app.config['PASSWORD'] = password
 
@@ -764,6 +777,7 @@ def install_auth_handler(password):
             flash('You must log-in to view the database browser.', 'danger')
             session['next_url'] = request.base_url
             return redirect(url_for('login'))
+
 
 def initialize_app(filename, read_only=False, password=None, url_prefix=None):
     global dataset
@@ -793,6 +807,7 @@ def initialize_app(filename, read_only=False, password=None, url_prefix=None):
 
     migrator = dataset._migrator
     dataset.close()
+
 
 def main():
     # This function exists to act as a console script entry-point.

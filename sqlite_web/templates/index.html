@@ -1,6 +1,5 @@
 {% extends "base_tables.html" %}
-
-{% block content_title %}{{ dataset.base_name }}{% endblock %}
+{% block content_title %}ISF Browser: {{ dataset.base_name }}{% endblock %}
 
 {% block content %}
   <table class="table table-striped">
@@ -24,6 +23,7 @@
         <td>{{ dataset.created.strftime('%A %B %d, %Y at %I:%M:%p') }}</td>
       </tr>
       <tr>
+
         <th>Geändert</th>
         <td>{{ dataset.modified.strftime('%A %B %d, %Y at %I:%M:%p') }}</td>
       </tr>

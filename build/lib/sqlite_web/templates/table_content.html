@@ -25,13 +25,13 @@
 		$this.html('Edit');
 		tds.prop('contenteditable', false);
 	}
-});
+    });
   </script>
 {% endblock %}
 
 {% block content_title %}
   {{ super() }}
-  <small>{{ ds_table.all().count() }} rows, showing page {{ page }}</small>
+  <small>{{ ds_table.all().count() }} Zeile(n), Seite {{ page }}</small>
 {% endblock %}
 
 {% block content_tab_class %} active{% endblock %}
