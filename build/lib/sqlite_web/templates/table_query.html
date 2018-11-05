@@ -70,28 +70,55 @@
         </div>
       </div>
     </div>
+  </form>
+    <hr/>
+
+    <form>
 {#  Neuer Button fuer Query Konstruktion#}
-    <div class="btn-group">
+    {#<div class="btn-group"> #}{#  Begin Query Customizer button group #}{#
       <div class="dropdown">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Feld</button>
+                id="dropdownMenuButton1" aria-haspopup="true" aria-expanded="false">Feld</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {% for column in columns %}
-            <a class="dropdown-item sql-image" href="">{{ column }}</a>
+            <a class="dropdown-item " href="">{{ column }}</a>
           {% endfor %}
         </div>
       </div>
-      <div class="dropdown">
+    </div>#}
+
+        <div class="form-group">
+            <label for="FieldSelect1">Operator</label>
+            <select class=form-control" id="FieldSelect1">
+            {% for column in columns  %}
+            <option>{{ column }}</option>
+            {% endfor %}
+            </select>
+            <label for="OperatorSelect1">Operator</label>
+            <select class="form-control" id="OperatorSelect1">
+            <option><</option>
+            <option>></option>
+            <option><=</option>
+            <option>>=</option>
+            <option>=</option>
+            <option><></option>
+            </select>
+            <input type="email" class="form-control" id="QueryValue1" placeholder="name@example.com">
+        </div>
+
+    </form>
+     {# <div class="dropdown">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Operator</button>
+                id="dropdownMenuButton2" aria-haspopup="true" aria-expanded="false">Operator</button>
        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {% for query_operator in query_operators %}
             <a class="dropdown-item" href="">{{ query_operator }}</a>
           {% endfor %}
       </div>
-    </div>
-  </form>
-  <hr />
+    </div>#}
+    {#  End Query Customizer button group #}
+
+
 
   {% if row_count is not none and row_count >= 0 %}
     <p>Modifizierte Zeilen: <code>{{ row_count }}</code></p>

@@ -16,6 +16,10 @@ https://www.youtube.com/watch?v=Ch1-MdFpbNc
 https://github.com/SonarSystems/Bootstrap-4-Tutorial-Series
 https://sonarlearning.co.uk/coursepage.php?topic=web&course=bootstrap-4
 
+### Forms with Boostrap - used for table_query.html
+https://getbootstrap.com/docs/4.0/components/forms/
+
+
 
 ## Flask WTF
 https://flask-wtf.readthedocs.io/en/stable/index.html
