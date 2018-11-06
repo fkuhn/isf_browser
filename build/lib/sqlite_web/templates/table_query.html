@@ -1,7 +1,7 @@
 {% extends "base_table.html" %}
 
 {% block extra_head %}
-<style type="text/css">
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
   pre { clear: right; }
   {% if not session.get('show') %}div#tableInfo { display: none; }{% endif %}
 </style>
@@ -48,7 +48,7 @@
 
 
 {#  TODO: This is the form to compile the query. a dynamic button-based query construction is neede here#}
-  <form action="." method="post" role="form">
+{#  <form action="." method="post" role="form">
     <div class="form-group{% if error %} has-error has-feedback{% endif %}">
       <textarea class="form-control" name="sql" style="height: 120px;">{% if sql %}{{ sql }}{% endif %}</textarea>
       {% if error %}
@@ -71,53 +71,59 @@
       </div>
     </div>
   </form>
-    <hr/>
+    <hr/>#}
+    <form class="form-inline" action="." method="post" role="form">
+    <div class="form-group mb-2">
+        <label for="fieldvarselect1" class="sr-only">Feld</label>
+        <select class="form-control typeahead-select" id="fieldvarselect1">
+            {% for column in columns %}
+            <option>{{ column }}</option>
+          {% endfor %}
 
-    <form>
+        </select>
+
+        <label for="operatorselect1" class="sr-only">Operator</label>
+        <select class="form-control" id="operatorselect1">
+            {% for operator in query_operators %}
+            <option>{{ operator }}</option>
+          {% endfor %}
+        </select>
+        <label for="valueentry1" class="sr-only">Wert</label>
+        <input type="text" class="form-control" id="valueentry1" placeholder="Werteingabe">
+        </div>
+         <div class="input-group-append">
+             <button type="submit" class="btn btn-outline-primary">
+                 <i class="fa fa-search"></i>
+             </button>
+         </div>
+    </div>
+
+    </form>
 {#  Neuer Button fuer Query Konstruktion#}
-    {#<div class="btn-group"> #}{#  Begin Query Customizer button group #}{#
+  {#
+  <form>
+  <div class="btn-group">
       <div class="dropdown">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton1" aria-haspopup="true" aria-expanded="false">Feld</button>
+                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Feld</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {% for column in columns %}
-            <a class="dropdown-item " href="">{{ column }}</a>
+            <a class="dropdown-item sql-image" href="">{{ column }}</a>
           {% endfor %}
         </div>
       </div>
-    </div>#}
-
-        <div class="form-group">
-            <label for="FieldSelect1">Operator</label>
-            <select class=form-control" id="FieldSelect1">
-            {% for column in columns  %}
-            <option>{{ column }}</option>
-            {% endfor %}
-            </select>
-            <label for="OperatorSelect1">Operator</label>
-            <select class="form-control" id="OperatorSelect1">
-            <option><</option>
-            <option>></option>
-            <option><=</option>
-            <option>>=</option>
-            <option>=</option>
-            <option><></option>
-            </select>
-            <input type="email" class="form-control" id="QueryValue1" placeholder="name@example.com">
-        </div>
-
-    </form>
-     {# <div class="dropdown">
+      <div class="dropdown">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton2" aria-haspopup="true" aria-expanded="false">Operator</button>
+                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Operator</button>
        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {% for query_operator in query_operators %}
             <a class="dropdown-item" href="">{{ query_operator }}</a>
           {% endfor %}
       </div>
-    </div>#}
-    {#  End Query Customizer button group #}
-
+    </div>
+    </div>
+  </form>#}
+  <hr />
 
 
   {% if row_count is not none and row_count >= 0 %}
