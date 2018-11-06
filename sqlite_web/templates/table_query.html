@@ -73,31 +73,32 @@
   </form>
     <hr/>#}
     <form class="form-inline" action="." method="post" role="form">
-    <div class="form-group mb-2">
+    <div class="form-group mb-2 {% if error %} has-error has-feedback{% endif %}" >
         <label for="fieldvarselect1" class="sr-only">Feld</label>
-        <select class="form-control typeahead-select" id="fieldvarselect1">
+        <select class="form-control typeahead-select" name="fielvarselect" id="fieldvarselect1">
             {% for column in columns %}
             <option>{{ column }}</option>
           {% endfor %}
-
         </select>
-
+        {% if error %}
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <span class="help-block">{{ error }}</span>
+        {% endif %}
         <label for="operatorselect1" class="sr-only">Operator</label>
-        <select class="form-control" id="operatorselect1">
+        <select class="form-control" name="operatorselect" id="operatorselect1">
             {% for operator in query_operators %}
             <option>{{ operator }}</option>
           {% endfor %}
         </select>
         <label for="valueentry1" class="sr-only">Wert</label>
-        <input type="text" class="form-control" id="valueentry1" placeholder="Werteingabe">
+        <input type="text" class="form-control" name="value_entry" id="valueentry1" placeholder="Werteingabe">
+        <button class="btn btn-primary" type="submit">Abfrage</button>
         </div>
-         <div class="input-group-append">
+         {#<div class="input-group-append">
              <button type="submit" class="btn btn-outline-primary">
-                 <i class="fa fa-search"></i>
+                 <i class="fa fa-search">Abfragen</i>
              </button>
-         </div>
-    </div>
-
+         </div>#}
     </form>
 {#  Neuer Button fuer Query Konstruktion#}
   {#
@@ -125,6 +126,8 @@
   </form>#}
   <hr />
 
+    {# Print the SQL for development  #}
+    <div>SQL-Ausdruck: {{ sql }}</div>
 
   {% if row_count is not none and row_count >= 0 %}
     <p>Modifizierte Zeilen: <code>{{ row_count }}</code></p>
@@ -171,7 +174,7 @@
         </div>
         <div class="modal-body"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
         </div>
       </div>
     </div>
