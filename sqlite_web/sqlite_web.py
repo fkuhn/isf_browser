@@ -472,34 +472,40 @@ def table_query(table):
     columns = [f.column_name for f in ds_table.model_class._meta.sorted_fields]
     # isf_browser features
     query_operators = ["<",">",">=","<=","=","<>"]
-
+    select_query_el_number = 15
+    query_element_number = 0
 
     if request.method == 'POST':
 
         #sql = request.form['sql']
 
-        query_field = request.form['fielvarselect']
-        query_operator = request.form['operatorselect']
-        query_value = request.form['value_entry']
+        if request.form['submit'] == 'querynumber':
+            query_element_number = request.form['querynumber1']
 
-        sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}"'.format(table,
-                                                     query_field,
-                                                     query_operator,
-                                                     query_value)
+        if request.form['submit'] == 'abfrage':
 
-        if 'export_json' in request.form:
-            return export(table, sql, 'json')
-        elif 'export_csv' in request.form:
-            return export(table, sql, 'csv')
+            query_field = request.form['fielvarselect']
+            query_operator = request.form['operatorselect']
+            query_value = request.form['value_entry']
 
-        try:
-            cursor = dataset.query(sql)
-        except Exception as exc:
-            error = str(exc)
-        else:
-            data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
-            data_description = cursor.description
-            row_count = cursor.rowcount
+            sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}"'.format(table,
+                                                         query_field,
+                                                         query_operator,
+                                                         query_value)
+
+            if 'export_json' in request.form:
+                return export(table, sql, 'json')
+            elif 'export_csv' in request.form:
+                return export(table, sql, 'csv')
+
+            try:
+                cursor = dataset.query(sql)
+            except Exception as exc:
+                error = str(exc)
+            else:
+                data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
+                data_description = cursor.description
+                row_count = cursor.rowcount
     else:
         if request.args.get('sql'):
             sql = request.args.get('sql')
@@ -522,7 +528,8 @@ def table_query(table):
         table_sql=table_sql,
         field_names=field_names,
         columns=columns,
-        query_operators=query_operators)
+        query_operators=query_operators,
+        query_element_number=query_element_number)
 
 @app.route('/table-definition/', methods=['POST'])
 def set_table_definition_preference():

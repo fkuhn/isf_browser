@@ -9,6 +9,19 @@
 
 {% block extra_scripts %}
   <script type="text/javascript">
+    $(document).ready(function() {
+
+	//here first get the contents of the div with name class copy-fields and add it to after "after-add-more" div class.
+      $(".add-more").click(function(){
+          var html = $(".copy-fields").html();
+          $(".after-add-more").after(html);
+      });
+    //here it will remove the current value of the remove button which has been pressed
+      $("body").on("click",".remove",function(){
+          $(this).parents(".control-group").remove();
+      });
+
+    });
     $(function() {
       var tableInfo = $('div#tableInfo');
       $('a.sql-image').on('click', function(e) {
@@ -72,7 +85,21 @@
     </div>
   </form>
     <hr/>#}
+  {#  <form class="input">
+    <div>
+    <select class="form-control" name="querynumber1">
+        {% for number in range(select_query_el_number) %}
+        <option>{{ number }}</option>
+        {% endfor %}
+    </select>
+     <button class="btn btn-primary" type="submit" value="querynumber">Auswahl</button>
+    </div>
+    </form>#}
+
+
     <form class="form-inline" action="." method="post" role="form">
+
+{#    {% for query_element in query_element_number %}#}
     <div class="form-group mb-2 {% if error %} has-error has-feedback{% endif %}" >
         <label for="fieldvarselect1" class="sr-only">Feld</label>
         <select class="form-control typeahead-select" name="fielvarselect" id="fieldvarselect1">
@@ -92,8 +119,10 @@
         </select>
         <label for="valueentry1" class="sr-only">Wert</label>
         <input type="text" class="form-control" name="value_entry" id="valueentry1" placeholder="Werteingabe">
-        <button class="btn btn-primary" type="submit">Abfrage</button>
         </div>
+{#        {% endfor %}#}
+        <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>
+
          {#<div class="input-group-append">
              <button type="submit" class="btn btn-outline-primary">
                  <i class="fa fa-search">Abfragen</i>
@@ -126,7 +155,8 @@
   </form>#}
   <hr />
 
-    <div>{{ sql }}</div>
+    {# Print the SQL for development  #}
+    <div>SQL-Ausdruck: {{ sql }}</div>
 
   {% if row_count is not none and row_count >= 0 %}
     <p>Modifizierte Zeilen: <code>{{ row_count }}</code></p>
