@@ -479,11 +479,6 @@ def table_query(table):
 
         #sql = request.form['sql']
 
-        if request.form['submit'] == 'querynumber':
-            query_element_number = request.form['querynumber1']
-
-        if request.form['submit'] == 'abfrage':
-
             query_field = request.form['fielvarselect']
             query_operator = request.form['operatorselect']
             query_value = request.form['value_entry']
