@@ -479,6 +479,7 @@ def table_query(table):
 
         #sql = request.form['sql']
 
+            # define a basic query element
             query_field = request.form['fielvarselect']
             query_operator = request.form['operatorselect']
             query_value = request.form['value_entry']
@@ -487,6 +488,9 @@ def table_query(table):
                                                          query_field,
                                                          query_operator,
                                                          query_value)
+
+            # TODO: Add option to process "AND" / "OR" expressions
+            # TODO: Add feature to chain basic query elements
 
             if 'export_json' in request.form:
                 return export(table, sql, 'json')
