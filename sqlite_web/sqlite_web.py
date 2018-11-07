@@ -436,6 +436,7 @@ def table_content(table):
 
     ordering = request.args.get('ordering')
     if ordering:
+        # FIXME: check if lstrip - fuzzes with Field names having a '-' in name
         field = ds_table.model_class._meta.columns[ordering.lstrip('-')]
         if ordering.startswith('-'):
             field = field.desc()
@@ -479,32 +480,41 @@ def table_query(table):
 
         #sql = request.form['sql']
 
-            # define a basic query element
-            query_field = request.form['fielvarselect']
-            query_operator = request.form['operatorselect']
-            query_value = request.form['value_entry']
+        # define a basic query element
+        query_field1 = request.form['fielvarselect']
+        query_operator1 = request.form['operatorselect']
+        query_value1 = request.form['value_entry']
+        query_andor1 = request.form['andorselect']
 
-            sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}"'.format(table,
-                                                         query_field,
-                                                         query_operator,
-                                                         query_value)
+        query1 = f'"{query_field1}" {query_operator1} "{query_value1}" {query_andor1}'
 
-            # TODO: Add option to process "AND" / "OR" expressions
-            # TODO: Add feature to chain basic query elements
+        query_field2 = request.form['fielvarselect1']
+        query_operator2 = request.form['operatorselect1']
+        query_value2 = request.form['value_entry1']
+        query_andor2 = request.form['andorselect1']
 
-            if 'export_json' in request.form:
-                return export(table, sql, 'json')
-            elif 'export_csv' in request.form:
-                return export(table, sql, 'csv')
+        query2 = f'"{query_field2}" {query_operator2} "{query_value2}" {query_andor2}'
 
-            try:
-                cursor = dataset.query(sql)
-            except Exception as exc:
-                error = str(exc)
-            else:
-                data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
-                data_description = cursor.description
-                row_count = cursor.rowcount
+        # put together query elements to a valid sql statement
+
+        sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
+        sql = f'{sql_prefix} {query1} {query2}'
+
+        # TODO: Add feature to chain basic query elements
+
+        if 'export_json' in request.form:
+            return export(table, sql, 'json')
+        elif 'export_csv' in request.form:
+            return export(table, sql, 'csv')
+
+        try:
+            cursor = dataset.query(sql)
+        except Exception as exc:
+            error = str(exc)
+         else:
+              data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
+              data_description = cursor.description
+              row_count = cursor.rowcount
     else:
         if request.args.get('sql'):
             sql = request.args.get('sql')

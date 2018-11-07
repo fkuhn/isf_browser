@@ -480,14 +480,30 @@ def table_query(table):
         #sql = request.form['sql']
 
             # define a basic query element
-            query_field = request.form['fielvarselect']
-            query_operator = request.form['operatorselect']
-            query_value = request.form['value_entry']
+            query_field1 = request.form['fielvarselect']
+            query_operator1 = request.form['operatorselect']
+            query_value1 = request.form['value_entry']
+            query_andor1 = request.form['andorselect']
 
-            sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}"'.format(table,
-                                                         query_field,
-                                                         query_operator,
-                                                         query_value)
+            query1 = f'"{query_field1}" {query_operator1} "{query_value1}" {query_andor1}'
+
+            query_field2 = request.form['fielvarselect1']
+            query_operator2 = request.form['operatorselect1']
+            query_value2 = request.form['value_entry1']
+            query_andor2 = request.form['andorselect1']
+
+            query2 = f'"{query_field2}" {query_operator2} "{query_value2}" {query_andor2}'
+
+            # put together query elements to a valid sql statement
+
+            sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
+            sql = f'{sql_prefix} {query1} {query2}'
+
+            #sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}" {}'.format(table,
+            #                                             query_field1,
+            #                                             query_operator1,
+            #                                             query_value1,
+            #                                             query_andor1)
 
             # TODO: Add option to process "AND" / "OR" expressions
             # TODO: Add feature to chain basic query elements

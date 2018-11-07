@@ -126,7 +126,35 @@
             <option>OR</option>
         </select>
         </div>
+    {# 2nd Input Query Element #}
+     <div class="form-group mb-2 {% if error %} has-error has-feedback{% endif %}" >
+        <label for="fieldvarselect2" class="sr-only">Feld</label>
+        <select class="form-control typeahead-select" name="fielvarselect1" id="fieldvarselect2">
+            {% for column in columns %}
+            <option>{{ column }}</option>
+          {% endfor %}
+        </select>
+        {% if error %}
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <span class="help-block">{{ error }}</span>
+        {% endif %}
+        <label for="operatorselect2" class="sr-only">Operator</label>
+        <select class="form-control" name="operatorselect1" id="operatorselect1">
+            {% for operator in query_operators %}
+            <option>{{ operator }}</option>
+          {% endfor %}
+        </select>
+        <label for="valueentry2" class="sr-only">Wert</label>
+        <input type="text" class="form-control" name="value_entry1" id="valueentry2" placeholder="Werteingabe">
+        <label for="andorselect2" class="sr-only">AndOr</label>
+        <select class="form-control" name="andorselect1" id="andorselect2">
+            <option></option>
+            <option>AND</option>
+            <option>OR</option>
+        </select>
+        </div>
 {#        {% endfor %}#}
+    {# SUBMIT BUTTON #}
         <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>
 
          {#<div class="input-group-append">
@@ -162,8 +190,9 @@
   <hr />
 
     {# Print the SQL for development  #}
+    <p>
     <div>SQL-Ausdruck: {{ sql }}</div>
-
+    </p>
   {% if row_count is not none and row_count >= 0 %}
     <p>Modifizierte Zeilen: <code>{{ row_count }}</code></p>
   {% endif %}
