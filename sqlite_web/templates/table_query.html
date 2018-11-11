@@ -125,6 +125,14 @@
                             <option value="OR">ODER</option>
                         </select>
 
+                        <label for="parenthesis" class="sr-only">AndOr</label>
+                        <select class="form-control" name="parenthesis[]" id="parenthesis">
+                            <option value="" selected disabled>Klammer</option>
+                            <option value=""></option>
+                            <option value="("> ( </option>
+                            <option value=")"> ) </option>
+                        </select>
+
 
                     	<span class="input-group-btn">
                             <button class="btn btn-success btn-add" type="button">
@@ -141,7 +149,7 @@
             </div>
             {# SUBMIT BUTTON #}
                 <div><span> <button class="btn btn-primary" form="queryform" value="abfrage" type="submit">Abfrage</button>
-                         <button class="btn btn-secondary" form="queryform" name="export_json" type="submit">JSON Export</button>
+                       {#  <button class="btn btn-secondary" form="queryform" name="export_json" type="submit">JSON Export</button>#}
                        <button class="btn btn-secondary" form="queryform" name="export_csv" type="submit">CSV Export</button>
                    </span></div>
                 {% if error %}
@@ -302,7 +310,7 @@
         Ergebniszahl ({{ data|length }})
       </h3>
       <table class="table table-striped">
-        <thead>
+        <thead class="sticky-top">
           <tr>
             {% for col_desc in data_description %}
               <th>{{ col_desc[0] }}</th>

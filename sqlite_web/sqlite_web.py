@@ -540,9 +540,14 @@ def table_query(table):
         operators = request.form.getlist('operator_select[]')
         values = request.form.getlist('value_entry[]')
         andors = request.form.getlist('and_or_select[]')
+        parenthesis = request.form.getlist('parenthesis[]')
         sql_where = ""
-        for field_var, operator, value, andor in zip(field_vars, operators, values, andors):
-            sql_tmp = f'"{field_var}" {operator} "{value}" {andor}'
+        for field_var, operator, value, andor, parenth in zip(field_vars,
+                                                              operators,
+                                                              values,
+                                                              andors,
+                                                              parenthesis):
+            sql_tmp = f'"{field_var}" {operator} "{value}" {andor} {parenth}'
             sql_where = f'{sql_where} {sql_tmp}'
 
         sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
@@ -560,9 +565,9 @@ def table_query(table):
         except Exception as exc:
             error = str(exc)
         else:
-              data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
-              data_description = cursor.description
-              row_count = cursor.rowcount
+            data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
+            data_description = cursor.description
+            row_count = cursor.rowcount
     else:
         if request.args.get('sql'):
             sql = request.args.get('sql')
