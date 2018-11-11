@@ -91,23 +91,25 @@
 	<div class="row">
         <div class="control-group" id="fields">
             <div class="controls">
-                <form class="form-inline" action="." method="post" role="form" autocomplete="off">
-                    <div class="entry form-group {% if error %} has-error has-feedback{% endif %} col-xs-3">
+                <form class="form-inline" action="." method="post" role="form" id="queryform" autocomplete="off">
+                    <div class="entry form-group{#{% if error %} has-error has-feedback{% endif %}#} col-xs-3">
 
                        {#  <input class="form-control" name="fields[]" type="text" placeholder="Type something" /> #}
                         <label for="field_var_select1" class="sr-only">Feld</label>
                         <select class="form-control typeahead-select" name="field_var_select[]" id="field_var_select1" >
+                            <option value="" selected disabled>Feldwahl</option>
                             {% for column in columns %}
                             <option>{{ column }}</option>
                           {% endfor %}
                         </select>
-                        {% if error %}
+                        {#{% if error %}
                         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                         <span class="help-block">{{ error }}</span>
-                        {% endif %}
+                        {% endif %}#}
 
                          <label for="operatorselect" class="sr-only">Operator</label>
                          <select class="form-control" name="operator_select[]" id="operatorselect">
+                            <option value="" selected disabled>Operator</option>
                              {% for operator in query_operators %}
                             <option value="{{ operator }}">{{ operator }}</option>
                             {% endfor %}
@@ -116,10 +118,11 @@
                         <input type="text" class="form-control" name="value_entry[]"  placeholder="Werteingabe">
 
                         <label for="andorselect" class="sr-only">AndOr</label>
-                        <select class="form-control" name="and_or_select[]" id="andorselect" >
-                        <option value=""></option>
-                        <option value="AND">UND</option>
-                        <option value="OR">ODER</option>
+                        <select class="form-control" name="and_or_select[]" id="andorselect">
+                            <option value="" selected disabled>Verknüpfung</option>
+                            <option value=""></option>
+                            <option value="AND">UND</option>
+                            <option value="OR">ODER</option>
                         </select>
 
 
@@ -129,15 +132,23 @@
                             </button>
                         </span>
                     </div>
-                   <div><span> <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>
+                  {# <div><span> <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>
                          <button class="btn btn-secondary" name="export_json" type="submit">JSON Export</button>
                        <button class="btn btn-secondary" name="export_csv" type="submit">CSV Export</button>
-                   </span></div>
+                   </span></div>#}
                 </form>
             <br>
             </div>
             {# SUBMIT BUTTON #}
-
+                <div><span> <button class="btn btn-primary" form="queryform" value="abfrage" type="submit">Abfrage</button>
+                         <button class="btn btn-secondary" form="queryform" name="export_json" type="submit">JSON Export</button>
+                       <button class="btn btn-secondary" form="queryform" name="export_csv" type="submit">CSV Export</button>
+                   </span></div>
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                <strong>Fehler: </strong> {{ error }}
+                </div>
+                {% endif %}
             {#<div class="input-group-append">
              <button type="submit" class="btn btn-outline-primary">
              </button>
@@ -276,7 +287,7 @@
   <hr />
     {# Print the SQL for development  #}
     <p>
-    <div>SQL-Ausdruck: {{ sql }}</div>
+    <div class="p-3 mb-2 bg-info text-white">SQL-Ausdruck: {{ sql }}</div>
     </p>
   {% if row_count is not none and row_count >= 0 %}
     <p>Modifizierte Zeilen: <code>{{ row_count }}</code></p>
