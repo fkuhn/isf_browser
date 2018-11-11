@@ -436,6 +436,7 @@ def table_content(table):
 
     ordering = request.args.get('ordering')
     if ordering:
+        # FIXME: check if lstrip - fuzzes with Field names having a '-' in name
         field = ds_table.model_class._meta.columns[ordering.lstrip('-')]
         if ordering.startswith('-'):
             field = field.desc()
@@ -462,11 +463,69 @@ def table_content(table):
         total_pages=total_pages,
         total_rows=total_rows)
 
+
+# reshape php like arrays to use them with flask
+def save_path():
+    headers = ('name', 'price', 'quantity')
+    values = (
+        request.form.getlist('name[]'),
+        request.form.getlist('price[]'),
+        request.form.getlist('quantity[]'),
+    )
+    items = [{} for i in range(len(values[0]))]
+    for x, i in enumerate(values):
+        for _x, _i in enumerate(i):
+            items[_x][headers[x]] = _i
+    return jsonify(items)
+
+
+def parse_multi_form(form):
+    data = {}
+    for url_k in form:
+        v = form[url_k]
+        ks = []
+        while url_k:
+            if '[' in url_k:
+                k, r = url_k.split('[', 1)
+                ks.append(k)
+                if r[0] == ']':
+                    ks.append('')
+                url_k = r.replace(']', '', 1)
+            else:
+                ks.append(url_k)
+                break
+        sub_data = data
+        for i, k in enumerate(ks):
+            if k.isdigit():
+                k = int(k)
+            if i+1 < len(ks):
+                if not isinstance(sub_data, dict):
+                    break
+                if k in sub_data:
+                    sub_data = sub_data[k]
+                else:
+                    sub_data[k] = {}
+                    sub_data = sub_data[k]
+            else:
+                if isinstance(sub_data, dict):
+                    sub_data[k] = v
+
+    return data
+
+def array(list):
+    string = ""
+    for x in list:
+        string+= x
+    return string
+
 @app.route('/<table>/query/', methods=['GET', 'POST'])
 @require_table
 def table_query(table):
+
     data = []
-    data_description = error = row_count = sql = None
+    # initialize fields
+    data_description = error = row_count = sql = testfields = field_variables = None
+    items = None
     ds_table = dataset[table]
     field_names = ds_table.columns
     columns = [f.column_name for f in ds_table.model_class._meta.sorted_fields]
@@ -477,50 +536,33 @@ def table_query(table):
 
     if request.method == 'POST':
 
-        #sql = request.form['sql']
+        field_vars = request.form.getlist('field_var_select[]')
+        operators = request.form.getlist('operator_select[]')
+        values = request.form.getlist('value_entry[]')
+        andors = request.form.getlist('and_or_select[]')
+        sql_where = ""
+        for field_var, operator, value, andor in zip(field_vars, operators, values, andors):
+            sql_tmp = f'"{field_var}" {operator} "{value}" {andor}'
+            sql_where = f'{sql_where} {sql_tmp}'
 
-            # define a basic query element
-            query_field1 = request.form['fielvarselect']
-            query_operator1 = request.form['operatorselect']
-            query_value1 = request.form['value_entry']
-            query_andor1 = request.form['andorselect']
+        sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
+        sql = f'{sql_prefix} {sql_where}'
 
-            query1 = f'"{query_field1}" {query_operator1} "{query_value1}" {query_andor1}'
+        # TODO: Add feature to chain basic query elements
 
-            query_field2 = request.form['fielvarselect1']
-            query_operator2 = request.form['operatorselect1']
-            query_value2 = request.form['value_entry1']
-            query_andor2 = request.form['andorselect1']
+        if 'export_json' in request.form:
+            return export(table, sql, 'json')
+        elif 'export_csv' in request.form:
+            return export(table, sql, 'csv')
 
-            query2 = f'"{query_field2}" {query_operator2} "{query_value2}" {query_andor2}'
-
-            # put together query elements to a valid sql statement
-
-            sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
-            sql = f'{sql_prefix} {query1} {query2}'
-
-            #sql = 'SELECT *\n FROM "{}" WHERE "{}" {} "{}" {}'.format(table,
-            #                                             query_field1,
-            #                                             query_operator1,
-            #                                             query_value1,
-            #                                             query_andor1)
-
-            # TODO: Add option to process "AND" / "OR" expressions
-            # TODO: Add feature to chain basic query elements
-
-            if 'export_json' in request.form:
-                return export(table, sql, 'json')
-            elif 'export_csv' in request.form:
-                return export(table, sql, 'csv')
-
-            try:
-                cursor = dataset.query(sql)
-            except Exception as exc:
-                error = str(exc)
-            else:
-                data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
-                data_description = cursor.description
-                row_count = cursor.rowcount
+        try:
+            cursor = dataset.query(sql)
+        except Exception as exc:
+            error = str(exc)
+        else:
+              data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
+              data_description = cursor.description
+              row_count = cursor.rowcount
     else:
         if request.args.get('sql'):
             sql = request.args.get('sql')
@@ -542,7 +584,10 @@ def table_query(table):
         table=table,
         table_sql=table_sql,
         field_names=field_names,
+        field_variables=field_variables,
+        testfields=testfields,
         columns=columns,
+        items=jsonify(items),
         query_operators=query_operators,
         query_element_number=query_element_number)
 
