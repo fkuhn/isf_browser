@@ -24,7 +24,7 @@
         controlForm.find('.entry:not(:last) .btn-add')
             .removeClass('btn-add').addClass('btn-remove')
             .removeClass('btn-success').addClass('btn-danger')
-            .html('<span class="glyphicon glyphicon-minus">- Entfernen</span>');
+            .html('<span class="glyphicon glyphicon-minus">-Entfernen</span>');
     }).on('click', '.btn-remove', function(e)
     {
 		$(this).parents('.entry:first').remove();
@@ -95,9 +95,9 @@
                     <div class="entry form-group{#{% if error %} has-error has-feedback{% endif %}#} col-xs-3">
 
                        {#  <input class="form-control" name="fields[]" type="text" placeholder="Type something" /> #}
-                        <label for="field_var_select1" class="sr-only">Feld</label>
+                        <label for="field_var_select1" class="sr-only">Spalte</label>
                         <select class="form-control typeahead-select" name="field_var_select[]" id="field_var_select1" >
-                            <option value="" selected disabled>Feldwahl</option>
+                            <option class="bg-secondary" value="" selected disabled>Spalte</option>
                             {% for column in columns|sort %}
                             <option>{{ column }}</option>
                           {% endfor %}
@@ -109,7 +109,7 @@
 
                          <label for="operatorselect" class="sr-only">Operator</label>
                          <select class="form-control" name="operator_select[]" id="operatorselect">
-                            <option value="" selected disabled>Operator</option>
+                            <option class="bg-secondary" value="" selected disabled>Operator</option>
                              {% for operator in query_operators %}
                             <option value="{{ operator }}">{{ operator }}</option>
                             {% endfor %}
@@ -119,7 +119,7 @@
 
                         <label for="andorselect" class="sr-only">AndOr</label>
                         <select class="form-control" name="and_or_select[]" id="andorselect">
-                            <option value="" selected disabled>Verknüpfung</option>
+                            <option class="bg-secondary" value="" selected disabled>Verknüpfung</option>
                             <option value=""></option>
                             <option value="AND">UND</option>
                             <option value="OR">ODER</option>
@@ -127,7 +127,7 @@
 
                         <label for="parenthesis" class="sr-only">AndOr</label>
                         <select class="form-control" name="parenthesis[]" id="parenthesis">
-                            <option value="" selected disabled>Klammer</option>
+                            <option class="bg-secondary" value="" selected disabled>Klammer</option>
                             <option value=""></option>
                             <option value="("> ( </option>
                             <option value=")"> ) </option>
@@ -136,7 +136,7 @@
 
                     	<span class="input-group-btn">
                             <button class="btn btn-success btn-add" type="button">
-                                <span class="glyphicon glyphicon-plus">+ Neu</span>
+                                <span class="glyphicon glyphicon-plus">+Neu</span>
                             </button>
                         </span>
                     </div>
