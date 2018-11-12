@@ -12,7 +12,7 @@ else:
 
 setup(
     name='isf_browser',
-    version='0.1',
+    version='1.0',
     description='Webbasierter Browser für die ISF Datenbank.'
                 ' Basierend auf SQLITE-Web (v0.3.5) von Charles Leifner',
     long_description=long_description,
@@ -24,19 +24,18 @@ setup(
         'flask',
         'peewee>=3.0.0',
         'pygments',
-        'flask_wtf'
     ],
     include_package_data=True,
     packages=find_packages(),
     package_data={
-        'sqlite_web': [
+        'isf_browser': [
             'static/*/*',
             'templates/*'
         ],
     },
     entry_points={
         'console_scripts': [
-            'sqlite_web = sqlite_web.sqlite_web:main'
+            'isf_browser = isf_browser.sqlite_web:main'
         ],
     },
     classifiers=[
