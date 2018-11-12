@@ -98,7 +98,7 @@
                         <label for="field_var_select1" class="sr-only">Feld</label>
                         <select class="form-control typeahead-select" name="field_var_select[]" id="field_var_select1" >
                             <option value="" selected disabled>Feldwahl</option>
-                            {% for column in columns %}
+                            {% for column in columns|sort %}
                             <option>{{ column }}</option>
                           {% endfor %}
                         </select>

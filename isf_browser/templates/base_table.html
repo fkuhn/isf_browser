@@ -1,19 +1,19 @@
 {% extends "base_tables.html" %}
 
 {% block content_title %}
-  <a href="{{ url_for('index') }}">ISF Browser: {{ dataset.base_name }}</a> &mdash; {{ table }}
+    <a href="{{ url_for('index') }}"><b>ISF Browser:</b> {{ dataset.base_name }}</a> <br/> <b>Tabelle:</b> {{ table }}
 {% endblock %}
 
 {% block content %}
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link{% block structure_tab_class %}{% endblock %}" href="{{ url_for('table_structure', table=table) }}">Struktur</a>
-    </li>
-    <li class="nav-item">
       <a class="nav-link{% block content_tab_class %}{% endblock %}" href="{{ url_for('table_content', table=table) }}">Inhalt</a>
     </li>
     <li class="nav-item">
       <a class="nav-link{% block query_tab_class %}{% endblock %}" href="{{ url_for('table_query', table=table) }}">Datenabfrage</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% block structure_tab_class %}{% endblock %}" href="{{ url_for('table_structure', table=table) }}">Struktur</a>
     </li>
     {% if not dataset.is_readonly %}
     <li class="nav-item ml-auto">
