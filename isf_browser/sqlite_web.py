@@ -892,6 +892,21 @@ def initialize_app(filename, read_only=False, password=None, url_prefix=None):
     dataset.close()
 
 
+def main_file(path):
+    # this functions acts as an alternate file dialogue
+    # parser = get_option_parser()
+    options = ""
+    args = path
+    # options, args = parser.parse_args()
+    if not args:
+        die('Error: missing required path to database file.')
+
+
+
+    # Initialize the dataset instance and (optionally) authentication handler.
+    initialize_app(path)
+
+    app.run(host=options.host, port=options.port, debug=options.debug)
 def main():
     # This function exists to act as a console script entry-point.
     parser = get_option_parser()
