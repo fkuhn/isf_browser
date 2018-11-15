@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block sidebar %}
+    <p>Tabellen in der Datenbank:</p>
   <input class="form-control form-control-sm" id="table-search" placeholder="Tabellenname..." type="text" />
   <ul class="nav flex-column nav-pills" role="tablist">
     {% set virtual_tables_corollary = dataset.get_corollary_virtual_tables() %}

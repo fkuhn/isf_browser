@@ -641,9 +641,9 @@ def table_import(table):
     if request.method == 'POST':
         file_obj = request.files.get('file')
         if not file_obj:
-            flash('Please select an import file.', 'danger')
+            flash('Bitte Importdatei wählen.', 'danger')
         elif not file_obj.filename.lower().endswith(('.csv', '.json')):
-            flash('Unsupported file-type. Must be a .json or .csv file.',
+            flash('Dateityp nicht unterstützt. .json oder .csv benötigt.',
                   'danger')
         else:
             if file_obj.filename.lower().endswith('.json'):
@@ -895,11 +895,13 @@ def initialize_app(filename, read_only=False, password=None, url_prefix=None):
 def main_file(path):
     # this functions acts as an alternate file dialogue
     # parser = get_option_parser()
-    options = ""
-    args = path
+
+
     # options, args = parser.parse_args()
-    if not args:
+    if not path:
         die('Error: missing required path to database file.')
+    initialize_app(path)
+    app.run()
 
 
 

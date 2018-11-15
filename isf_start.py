@@ -2,7 +2,8 @@ import easygui
 from isf_browser.sqlite_web import *
 
 # very lazy file dialogue
-path = easygui.fileopenbox()
+path = easygui.fileopenbox(default='*.db')
 
-print(path)
-main_file(path)
+if path:
+
+    main_file(path)
