@@ -24,6 +24,7 @@ setup(
         'flask',
         'peewee>=3.0.0',
         'pygments',
+        'easygui'
     ],
     include_package_data=True,
     packages=find_packages(),
