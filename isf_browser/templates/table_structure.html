@@ -99,10 +99,10 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Columns</th>
-        <th>Unique</th>
+        <th>Spalten</th>
+        <th>Einzigartig</th>
         <th>SQL</th>
-        <th>Drop?</th>
+        <th>Löschen?</th>
       </tr>
     </thead>
     <tbody>
@@ -133,7 +133,7 @@
             {% if dataset.is_readonly %}
               <strong>read-only</strong>
             {% else %}
-              <a href="{{ url_for('drop_index', table=table, name=index.name) }}">Drop</a>
+              <a href="{{ url_for('drop_index', table=table, name=index.name) }}">Löschen</a>
             {% endif %}
           </td>
         </tr>
