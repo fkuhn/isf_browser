@@ -28,5 +28,5 @@
       </li>
     {% endfor %}
   </ul>
-    <p><img src="../static/img/ISF_Logo.jpg" class="img-fluid" alt="Responsive image"></p>
+<p><img src="{{ url_for('static', filename='img/ISF_Logo.jpg') }}" class="img-fluid" alt="Responsive image"></p>
 {% endblock %}

@@ -141,40 +141,7 @@
     </tbody>
   </table>
 
-{#  {% if triggers %}
-    <hr />
-    <h3 id="triggers">
-      <p class="float-right"><a class="btn btn-primary btn-sm" href="{{ url_for('add_trigger', table=table) }}">Add trigger</a></p>
-      Triggers
-    </h3>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>SQL</th>
-          <th>Drop?</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for trigger in triggers %}
-          <tr>
-            <td>{{ trigger.name }}</td>
-            <td>
-              <a class="view-sql" data-name="{{ trigger.name }}" href="#">SQL</a>
-              <div style="display:none;">{{ trigger.sql|highlight }}</div>
-            </td>
-            <td>
-              {% if dataset.is_readonly %}
-                <strong>read-only</strong>
-              {% else %}
-                <a href="{{ url_for('drop_trigger', table=table, name=trigger.name) }}">Drop</a>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}#}
+
   <div class="modal fade" id="sql-modal">
     <div class="modal-dialog">
       <div class="modal-content">

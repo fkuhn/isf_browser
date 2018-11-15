@@ -138,16 +138,13 @@
                             </button>
                         </span>
                     </div>
-                  {# <div><span> <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>
-                         <button class="btn btn-secondary" name="export_json" type="submit">JSON Export</button>
-                       <button class="btn btn-secondary" name="export_csv" type="submit">CSV Export</button>
-                   </span></div>#}
+
                 </form>
             <br>
             </div>
             {# SUBMIT BUTTON #}
                 <div><span> <button class="btn btn-primary" form="queryform" value="abfrage" type="submit">Abfrage</button>
-                       {#  <button class="btn btn-secondary" form="queryform" name="export_json" type="submit">JSON Export</button>#}
+
                        <button class="btn btn-secondary" form="queryform" name="export_csv" type="submit">CSV Export</button>
                    </span></div>
                 {% if error %}
@@ -163,133 +160,7 @@
 	</div>
     </div>
 
-{#  TODO: This is the form to compile the query. a dynamic button-based query construction is neede here#}
-{#  <form action="." method="post" role="form">
-    <div class="form-group{% if error %} has-error has-feedback{% endif %}">
-      <textarea class="form-control" name="sql" style="height: 120px;">{% if sql %}{{ sql }}{% endif %}</textarea>
-      {% if error %}
-        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        <span class="help-block">{{ error }}</span>
-      {% endif %}
-    </div>
-    <button class="btn btn-primary" type="submit">Ausführen</button>
-    <button class="btn btn-secondary" name="export_json" type="submit">JSON Export</button>
-    <button class="btn btn-secondary" name="export_csv" type="submit">CSV Export</button>
-    <div class="btn-group">
-      <div class="dropdown">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">SQL Hilfe</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {% for column in query_images %}
-            <a class="dropdown-item sql-image" href="{{ url_for('static', filename=img_url) }}">{{ ' : '.join(parts) }}</a>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  </form>
-    <hr/>#}
-  {#  <form class="input">
-    <div>
-    <select class="form-control" name="querynumber1">
-        {% for number in range(select_query_el_number) %}
-        <option>{{ number }}</option>
-        {% endfor %}
-    </select>
-     <button class="btn btn-primary" type="submit" value="querynumber">Auswahl</button>
-    </div>
-    </form>#}
 
-
-  {#  <form class="form-inline" action="." method="post" role="form"> #}
-
-    {#    {% for query_element in query_element_number %}#}
-   {#  <div class="form-group mb-2 {% if error %} has-error has-feedback{% endif %}" >
-        <label for="fieldvarselect1" class="sr-only">Feld</label>
-        <select class="form-control typeahead-select" name="fielvarselect" id="fieldvarselect1">
-            {% for column in columns %}
-            <option>{{ column }}</option>
-          {% endfor %}
-        </select>
-        {% if error %}
-        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        <span class="help-block">{{ error }}</span>
-        {% endif %}
-        <label for="operatorselect1" class="sr-only">Operator</label>
-        <select class="form-control" name="operatorselect" id="operatorselect1">
-            {% for operator in query_operators %}
-            <option>{{ operator }}</option>
-          {% endfor %}
-        </select>
-        <label for="valueentry1" class="sr-only">Wert</label>
-        <input type="text" class="form-control" name="value_entry" id="valueentry1" placeholder="Werteingabe">
-        <label for="andorselect1" class="sr-only">AndOr</label>
-        <select class="form-control" name="andorselect" id="andorselect1">
-            <option></option>
-            <option>AND</option>
-            <option>OR</option>
-        </select>
-        </div> #}
-    {# 2nd Input Query Element #}
-     {#<div class="form-group mb-2 {% if error %} has-error has-feedback{% endif %}" >
-        <label for="fieldvarselect2" class="sr-only">Feld</label>
-        <select class="form-control typeahead-select" name="fielvarselect1" id="fieldvarselect2">
-            {% for column in columns %}
-            <option>{{ column }}</option>
-          {% endfor %}
-        </select>
-        {% if error %}
-        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-        <span class="help-block">{{ error }}</span>
-        {% endif %}
-        <label for="operatorselect2" class="sr-only">Operator</label>
-        <select class="form-control" name="operatorselect1" id="operatorselect1">
-            {% for operator in query_operators %}
-            <option>{{ operator }}</option>
-          {% endfor %}
-        </select>
-        <label for="valueentry2" class="sr-only">Wert</label>
-        <input type="text" class="form-control" name="value_entry1" id="valueentry2" placeholder="Werteingabe">
-        <label for="andorselect2" class="sr-only">AndOr</label>
-        <select class="form-control" name="andorselect1" id="andorselect2">
-            <option></option>
-            <option>AND</option>
-            <option>OR</option>
-        </select>
-        </div>#}
-{#        {% endfor %}#}
-    {# SUBMIT BUTTON #}
-      {#  <button class="btn btn-primary" value="abfrage" type="submit">Abfrage</button>#}
-
-         {#<div class="input-group-append">
-             <button type="submit" class="btn btn-outline-primary">
-                 <i class="fa fa-search">Abfragen</i>
-             </button>
-         </div>#}
-   {# </form> #}
-{#  Neuer Button fuer Query Konstruktion#}
-  {#
-  <form>
-  <div class="btn-group">
-      <div class="dropdown">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Feld</button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {% for column in columns %}
-            <a class="dropdown-item sql-image" href="">{{ column }}</a>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="dropdown">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">Operator</button>
-       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        {% for query_operator in query_operators %}
-            <a class="dropdown-item" href="">{{ query_operator }}</a>
-          {% endfor %}
-      </div>
-    </div>
-    </div>
-  </form>#}
   <hr />
     {# Print the SQL for development  #}
 
