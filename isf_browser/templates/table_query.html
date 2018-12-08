@@ -92,6 +92,14 @@
                 <form class="form-inline" action="." method="post" role="form" id="queryform" autocomplete="off">
                     <div class="entry form-group{#{% if error %} has-error has-feedback{% endif %}#} col-xs-3">
 
+                      <label for="exister_select" class="sr-only">Operator</label>
+                         <select class="form-control" name="exister_select[]" id="exister_select">
+                             <option class="bg-secondary" value="" selected disabled>Klammer</option>
+                            <option value=""></option>
+                            <option value="NOT"> NICHT </option>
+                         </select>
+
+
                        {#  <input class="form-control" name="fields[]" type="text" placeholder="Type something" /> #}
                         <label for="field_var_select1" class="sr-only">Spalte</label>
                         <select class="form-control typeahead-select" name="field_var_select[]" id="field_var_select1" >

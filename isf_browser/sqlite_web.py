@@ -541,13 +541,14 @@ def table_query(table):
         values = request.form.getlist('value_entry[]')
         andors = request.form.getlist('and_or_select[]')
         parenthesis = request.form.getlist('parenthesis[]')
+        exister = request.form.getlist('exister_select[]')
         sql_where = ""
         for field_var, operator, value, andor, parenth in zip(field_vars,
                                                               operators,
                                                               values,
                                                               andors,
                                                               parenthesis):
-            sql_tmp = f'"{field_var}" {operator} "{value}" {andor} {parenth}'
+            sql_tmp = f'"{exister} {field_var}" {operator} "{value}" {andor} {parenth}'
             sql_where = f'{sql_where} {sql_tmp}'
 
         sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
@@ -711,8 +712,10 @@ def value_filter(value, max_length=50):
                         value)
     return value
 
+
 column_re = re.compile('(.+?)\((.+)\)', re.S)
 column_split_re = re.compile(r'(?:[^,(]|\([^)]*\))+')
+
 
 def _format_create_table(sql):
     create_table, column_list = column_re.search(sql).groups()
