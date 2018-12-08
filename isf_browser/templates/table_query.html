@@ -92,12 +92,7 @@
                 <form class="form-inline" action="." method="post" role="form" id="queryform" autocomplete="off">
                     <div class="entry form-group{#{% if error %} has-error has-feedback{% endif %}#} col-xs-3">
 
-                      <label for="exister_select" class="sr-only">Operator</label>
-                         <select class="form-control" name="exister_select[]" id="exister_select">
-                             <option class="bg-secondary" value="" selected disabled>Klammer</option>
-                            <option value=""></option>
-                            <option value="NOT"> NICHT </option>
-                         </select>
+
 
 
                        {#  <input class="form-control" name="fields[]" type="text" placeholder="Type something" /> #}
@@ -129,6 +124,7 @@
                             <option value=""></option>
                             <option value="AND">UND</option>
                             <option value="OR">ODER</option>
+                            <option value="AND NOT">UND NICHT</option>
                         </select>
 
                         <label for="parenthesis" class="sr-only">AndOr</label>

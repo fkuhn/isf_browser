@@ -548,7 +548,7 @@ def table_query(table):
                                                               values,
                                                               andors,
                                                               parenthesis):
-            sql_tmp = f'"{exister} {field_var}" {operator} "{value}" {andor} {parenth}'
+            sql_tmp = f'"{field_var}" {operator} "{value}" {andor} {parenth}'
             sql_where = f'{sql_where} {sql_tmp}'
 
         sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
