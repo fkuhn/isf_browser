@@ -1,4 +1,3 @@
 flask
 pygments
-easygui
 -e git+git://github.com/coleifer/peewee.git#egg=peewee
