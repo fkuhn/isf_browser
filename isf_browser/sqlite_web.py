@@ -419,7 +419,8 @@ def drop_trigger(table):
 def table_content(table):
     page_number = request.args.get('page') or ''
     page_number = int(page_number) if page_number.isdigit() else 1
-
+    audiolink = "file://"
+    pdflink = "file://"
     dataset.update_cache(table)
     ds_table = dataset[table]
     total_rows = ds_table.all().count()
@@ -452,6 +453,8 @@ def table_content(table):
     return render_template(
         'table_content.html',
         columns=columns,
+        pdflink=pdflink,
+        audiolink=audiolink,
         ds_table=ds_table,
         field_names=field_names,
         next_page=next_page,
@@ -522,6 +525,8 @@ def array(list):
 @require_table
 def table_query(table):
 
+    pdflink= "file://"
+    audiolink = "file//"
     data = []
     # initialize fields
     data_description = error = row_count = sql = testfields = field_variables = None
@@ -585,6 +590,8 @@ def table_query(table):
         data_description=data_description,
         error=error,
         query_images=get_query_images(),
+        audiolink=audiolink,
+        pdflink=pdflink,
         row_count=row_count,
         sql=sql,
         table=table,
