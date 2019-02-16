@@ -48,6 +48,8 @@
         {% endfor %}
       </tr>
     </thead>
+    # make links for audio and pdf clickable
+
     <tbody>
       {% for row in query %}
         <tr>
@@ -57,7 +59,18 @@
               {% if value is none %}
                 NULL
               {% else %}
-                {{ value|value_filter|safe }}
+                {% if field == "Audio" %}
+                    <a href="{{audiolink}}/{{value}}.wav">
+                    {{ value|value_filter|safe }}
+                    </a>
+
+                {% elif field == "Proband" %}
+                    <a href="{{pdflink}}/{{value}}.pdf">
+                    {{ value|value_filter|safe }}
+                    </a>
+                {% else %}
+                    {{ value|value_filter|safe }}
+                {% endif %}
               {% endif %}
             </td>
           {% endfor %}
