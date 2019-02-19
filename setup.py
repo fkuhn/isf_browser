@@ -32,6 +32,8 @@ setup(
         'isf_browser': [
             'static/*/*',
             'templates/*'
+
+
         ],
     },
     entry_points={

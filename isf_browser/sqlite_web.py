@@ -75,6 +75,12 @@ MAX_RESULT_SIZE = 1000
 ROWS_PER_PAGE = 50
 SECRET_KEY = 'sqlite-database-browser-0.1.0'
 
+#FIXME: set paths for primary data files
+# set external file paths
+
+PDFPATH = os.getcwd()+'/data/pdf'
+AUDIOPATH = os.getcwd()+'/data/audio'
+
 app = Flask(
     __name__,
     static_folder=os.path.join(CUR_DIR, 'static'),
@@ -212,6 +218,8 @@ def require_table(fn):
             abort(404)
         return fn(table, *args, **kwargs)
     return inner
+
+
 
 @app.route('/create-table/', methods=['POST'])
 def table_create():
@@ -419,8 +427,8 @@ def drop_trigger(table):
 def table_content(table):
     page_number = request.args.get('page') or ''
     page_number = int(page_number) if page_number.isdigit() else 1
-    audiolink = "file://"
-    pdflink = "file://"
+    audiolink = AUDIOPATH
+    pdflink = PDFPATH
     dataset.update_cache(table)
     ds_table = dataset[table]
     total_rows = ds_table.all().count()
@@ -525,8 +533,8 @@ def array(list):
 @require_table
 def table_query(table):
 
-    pdflink= "file://"
-    audiolink = "file//"
+    pdflink= "file://"+PDFPATH
+    audiolink = "file//"+AUDIOPATH
     data = []
     # initialize fields
     data_description = error = row_count = sql = testfields = field_variables = None
