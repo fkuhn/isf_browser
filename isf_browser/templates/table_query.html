@@ -200,13 +200,13 @@
                   {% if value is none %}
                     NULL
                     {% else %}
-                        {% if data_description[row.index(value)][0] == "Audio" %}
-                            {{ "Audio gefunden" }}
+                        {% set col_num = loop.index %}
+                        {% if data_description[row.index(value)][0] == "Proband"  and col_num > 1 %}
                             {% set audio_file = 'audio/'+value+'.wav' %}
                             <a href="{{ url_for('static', filename=audio_file) }}" target="_blank">
                             {{ value }}
                             </a>
-                        {% elif data_description[row.index(value)][0] == "Proband" %}
+                        {% elif data_description[row.index(value)][0] == "Proband" and col_num == 1%}
                             {% set pdf_file = 'pdf/'+value+'.pdf' %}
                             <a href="{{ url_for('static', filename=pdf_file) }}" target="_blank">
                             {{ value }}
@@ -214,6 +214,8 @@
                         {% else %}
                             {{ value }}
                         {% endif %}
+
+
                     {% endif %}
 
                 </td>
