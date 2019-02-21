@@ -529,6 +529,11 @@ def array(list):
         string+= x
     return string
 
+
+def qzip(dat1, dat2):
+
+    return zip(dat1, dat2)
+
 @app.route('/<table>/query/', methods=['GET', 'POST'])
 @require_table
 def table_query(table):
@@ -567,8 +572,6 @@ def table_query(table):
         sql_prefix = f'SELECT *\n FROM "{table}" WHERE'
         sql = f'{sql_prefix} {sql_where}'
 
-        # TODO: Add feature to chain basic query elements
-
         if 'export_json' in request.form:
             return export(table, sql, 'json')
         elif 'export_csv' in request.form:
@@ -581,6 +584,7 @@ def table_query(table):
         else:
             data = cursor.fetchall()[:app.config['MAX_RESULT_SIZE']]
             data_description = cursor.description
+            data_test = data_description[0][0]
             row_count = cursor.rowcount
     else:
         if request.args.get('sql'):

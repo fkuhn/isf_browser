@@ -186,6 +186,7 @@
         <thead class="sticky-top">
           <tr>
             {% for col_desc in data_description %}
+
               <th>{{ col_desc[0] }}</th>
             {% endfor %}
           </tr>
@@ -196,18 +197,18 @@
             <tr>
               {% for value in row %}
                 <td>
-
                   {% if value is none %}
                     NULL
                     {% else %}
-                    <!--FIXME alle spaltenwerte sind links . korrigieren-->
-                        <!--TODO Enter href for pdf and audio-->
-                        {% if data_description[90][0] == "Audio" %}
-                            <a href="{{audiolink}}/{{value}}.wav">
+                        {% if data_description[row.index(value)][0] == "Audio" %}
+                            {{ "Audio gefunden" }}
+                            {% set audio_file = 'audio/'+value+'.wav' %}
+                            <a href="{{ url_for('static', filename=audio_file) }}" target="_blank">
                             {{ value }}
                             </a>
-                        {% elif data_description[0][0] == "Proband" %}
-                            <a href="{{pdflink}}/{{value}}.pdf">
+                        {% elif data_description[row.index(value)][0] == "Proband" %}
+                            {% set pdf_file = 'pdf/'+value+'.pdf' %}
+                            <a href="{{ url_for('static', filename=pdf_file) }}" target="_blank">
                             {{ value }}
                             </a>
                         {% else %}
