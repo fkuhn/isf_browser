@@ -1,3 +1,3 @@
 # ISF_Browser
-## An SQLiteBrowser-based Tool for the ISF Database based on sqlite-web by Charles Leifner
+## An SQLiteBrowser-based Tool for BraKS based on sqlite-web by Charles Leifner
 
