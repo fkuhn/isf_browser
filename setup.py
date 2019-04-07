@@ -38,7 +38,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'isf_browser = isf_browser.sqlite_web:main'
+            'isf_browser = isf_browser.isf_browser:main'
         ],
     },
     classifiers=[
